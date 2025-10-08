@@ -34,13 +34,12 @@ namespace Infrastructure.Services
                 new(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
             };
 
-            // Adiciona os papéis (roles) do usuário como claims
             foreach (var userRole in user.UserRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, userRole.Role.Name));
             }
 
-            var accessToken = GenerateToken(claims, DateTime.UtcNow.AddMinutes(15)); // Duração curta para o Access Token
+            var accessToken = GenerateToken(claims, DateTime.UtcNow.AddMinutes(15)); 
             var refreshToken = GenerateRefreshToken();
  
             return (accessToken, refreshToken);
@@ -50,14 +49,13 @@ namespace Infrastructure.Services
         {
             var claims = new List<Claim>
             {
-                // Usamos uma claim customizada para o CPF. Evite usar "sub" para não confundir com o ID do usuário.
                 new("cpf", customer.Cpf!.Valor),
                 new(ClaimTypes.Name, customer.Name ?? string.Empty),
                 new(JwtRegisteredClaimNames.Email, customer.Mail ?? string.Empty),
                 new(ClaimTypes.Role, "Customer")
             };
 
-            return GenerateToken(claims, DateTime.UtcNow.AddHours(1)); // Token de cliente pode durar menos
+            return GenerateToken(claims, DateTime.UtcNow.AddHours(1));  
         }
 
         public string GenerateGuestToken()

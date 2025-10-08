@@ -42,7 +42,7 @@ namespace Infrastructure
         public static IHealthChecksBuilder AddHealthDb(this IHealthChecksBuilder services, IConfiguration configuration)
         {
             services.AddSqlServer(configuration.GetConnectionString(Configuration.ConnectionString), name: "SQL Server Check", tags: new string[] { "db", "data" });
-            return services;                                                // Isso é útil para saber que há um problema, mas a API ainda funciona
+            return services;                                                
         }
 
 
