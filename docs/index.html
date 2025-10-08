@@ -3,622 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentação - Tech Challenge</title>
+    <title>TechChallenge - Alexandre Alencar RM364893</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
-    
-    <!-- 
-        Application Structure Plan: 
-        A unified Single Page Application (SPA) structure with a fixed main sidebar for top-level navigation between the "Execution Guide" and "API Documentation". 
-        This layout allows users to easily switch contexts without leaving the page. The content for each guide is loaded into a main content area, and JavaScript is used to toggle visibility. 
-        This approach was chosen to merge two distinct documents into a cohesive whole, providing a seamless user experience and a centralized location for all project documentation.
-        Interactions like copy-to-clipboard and the internal smooth-scrolling navigation of the API docs are preserved within their respective content panes.
-    -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
+            background-color: #0D1117;
+            color: #C9D1D9;
         }
-        code, pre {
-            font-family: 'Fira Code', monospace;
+        .section-title {
+            color: #58A6FF;
         }
-        .code-block {
+        .card {
+            background-color: #161B22;
+            border: 1px solid #30363D;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #58A6FF;
+            transform: translateY(-5px);
+        }
+        .repo-tag {
+            background-color: #30363d;
+            border: 1px solid #4d545d;
+        }
+        .arrow {
             position: relative;
+            width: 100%;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .copy-btn {
+        .arrow::after {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 30px;
+            background-color: #58A6FF;
             position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            background-color: #475569; /* slate-600 */
-            color: #e2e8f0; /* slate-200 */
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            opacity: 0.3;
-            transition: all 0.2s ease-in-out;
         }
-        .code-block:hover .copy-btn {
+        .arrow::before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #58A6FF;
+            position: absolute;
+            bottom: -2px;
+        }
+        .parallel-arrows .arrow-line {
+            height: 2px;
+            background-color: #58A6FF;
+            width: 100%;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
             opacity: 1;
-            background-color: #334155; /* slate-700 */
-        }
-        /* Main Navigation Active State */
-        .main-nav-link.active {
-            color: #f59e0b; /* amber-500 */
-            background-color: #f1f5f9; /* slate-100 */
-            border-left: 4px solid #f59e0b;
-        }
-        /* API Docs Internal Navigation Active State */
-        .api-nav-link.active {
-            color: #f59e0b; /* amber-500 */
-            background-color: #f1f5f9; /* slate-100 */
-            border-right: 3px solid #f59e0b;
-        }
-        section {
-            scroll-margin-top: 1rem;
-        }
-        .diagram-box {
-            border: 1px solid #cbd5e1; /* slate-300 */
-            background-color: #ffffff;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            font-size: 0.875rem;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-        }
-        .diagram-arrow {
-            position: relative;
-            margin: 1rem 0;
-            color: #64748b; /* slate-500 */
-            text-align: center;
-        }
-        .diagram-arrow::after {
-            content: '↓';
-            font-size: 1.5rem;
-            font-weight: bold;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="antialiased">
 
-    <div class="flex">
-        <!-- Main Sidebar Navigation -->
+    <header class="bg-gray-900/50 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-800">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">TechChallenge - Alexandre Alencar RM364893</h1>
+            <ul class="flex space-x-6 text-gray-300">
+                <li><a href="#arquitetura" class="hover:text-blue-400 transition-colors">Arquitetura</a></li>
+                <li><a href="#repositorios" class="hover:text-blue-400 transition-colors">Repositórios</a></li>
+                <li><a href="#tecnologias" class="hover:text-blue-400 transition-colors">Tecnologias</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section class="text-center mb-20 fade-in">
+            <h2 class="text-4xl font-bold text-white mb-4">Arquitetura de Software & CI/CD na Azure</h2>
+            <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                Uma visão geral da arquitetura de microsserviços implantada na nuvem Azure, orquestrada com Kubernetes e totalmente automatizada com Terraform e GitHub Actions.
+            </p>
+        </section>
+
+        <section id="arquitetura" class="mb-24">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title fade-in">Diagrama de Fluxo e Ordem de Execução</h3>
+
+            <div class="flex flex-col items-center space-y-2 fade-in">
+                <!-- Start -->
+                <div class="card p-4 rounded-lg shadow-lg w-full md:w-1/3 text-center">
+                    <h4 class="font-semibold text-lg text-white">Início do Processo</h4>
+                    <p class="text-sm text-gray-400">Este fluxo detalha o passo a passo executado do zero, para um melhor entendimento de como foi desenhado o fluxo com base nos repositórios.</p>
+                </div>
+                <div class="arrow"></div>
+
+                <!-- Foundational -->
+                <div class="card p-4 rounded-lg shadow-lg w-full md:w-1/2 text-center">
+                    <p class="text-xs text-blue-400 font-mono mb-1">Passo 1</p>
+                    <h4 class="font-bold text-xl text-white">TechChallenge-infra-foundational</h4>
+                    <p class="text-sm text-gray-400">Cria a base: Grupo de Recursos, VNet e o Estado Remoto do Terraform.</p>
+                </div>
+                <div class="arrow"></div>
+                
+                <!-- Parallel Data & Compute -->
+                <div class="w-full text-center">
+                    <p class="text-xs text-blue-400 font-mono mb-2">Passo 2 (Execução em Paralelo)</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-8 items-start">
+                        <!-- Data -->
+                        <div class="card p-4 rounded-lg shadow-lg flex-1 text-center">
+                            <h4 class="font-bold text-xl text-white">TechChallenge-infra-data</h4>
+                            <p class="text-sm text-gray-400">Provisiona os serviços de persistência: Azure SQL e Blob Storage.</p>
+                        </div>
+                        <!-- Compute -->
+                        <div class="card p-4 rounded-lg shadow-lg flex-1 text-center">
+                             <h4 class="font-bold text-xl text-white">TechChallenge-infra-compute</h4>
+                            <p class="text-sm text-gray-400">Provisiona as plataformas de computação: AKS, ACR e Function App.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="arrow"></div>
+
+                <!-- Parallel Apps -->
+                <div class="w-full text-center">
+                    <p class="text-xs text-blue-400 font-mono mb-2">Passo 3 (Execução em Paralelo)</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-8 items-start">
+                        <!-- API Principal -->
+                        <div class="card p-4 rounded-lg shadow-lg flex-1 text-center">
+                            <h4 class="font-bold text-xl text-white">TechChallenge</h4>
+                            <p class="text-sm text-gray-400">Compila e faz deploy do código da API principal para o AKS.</p>
+                        </div>
+                        <!-- Auth Function -->
+                        <div class="card p-4 rounded-lg shadow-lg flex-1 text-center">
+                             <h4 class="font-bold text-xl text-white">TechChallenge-app-function</h4>
+                            <p class="text-sm text-gray-400">Compila e faz deploy do código de autenticação para a Function App.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="arrow"></div>
+
+                <!-- Gateway -->
+                <div class="card p-4 rounded-lg shadow-lg w-full md:w-1/2 text-center">
+                    <p class="text-xs text-blue-400 font-mono mb-1">Passo 4</p>
+                    <h4 class="font-bold text-xl text-white">TechChallenge-infra-gateway</h4>
+                    <p class="text-sm text-gray-400">Cria o API Gateway e configura o roteamento para os serviços já implantados.</p>
+                </div>
+                 <div class="arrow"></div>
+
+                <!-- Final State -->
+                 <div class="card p-4 rounded-lg shadow-lg w-full md:w-1/3 text-center bg-green-900/50 border-green-500">
+                    <h4 class="font-semibold text-lg text-white">MVP Concluído</h4>
+                    <p class="text-sm text-gray-300">Arquitetura completa e funcional no Azure.</p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="repositorios" class="mb-24">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title fade-in">Estrutura de Repositórios</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="card p-6 rounded-xl fade-in">
+                    <h4 class="font-bold text-xl mb-2 text-white"><a href="https://github.com/alealencarr/TechChallenge/">TechChallenge</a></h4>
+                    <p class="text-gray-400 text-sm mb-4">Repositório principal da aplicação. Contém a lógica de negócio, Dockerfile e manifestos Kubernetes.</p>
+                    <span class="repo-tag text-xs font-mono py-1 px-2 rounded-full text-gray-300">Aplicação</span>
+                </div>
+                <div class="card p-6 rounded-xl fade-in" style="transition-delay: 100ms;">
+                    <h4 class="font-bold text-xl mb-2 text-white"><a href="https://github.com/alealencarr/TechChallenge-app-function/">TechChallenge-app-function</a></h4>
+                    <p class="text-gray-400 text-sm mb-4">Contém o código C# da função serverless de autenticação e seu pipeline de deploy.</p>
+                    <span class="repo-tag text-xs font-mono py-1 px-2 rounded-full text-gray-300">Aplicação</span>
+                </div>
+                <div class="card p-6 rounded-xl fade-in" style="transition-delay: 200ms;">
+                    <h4 class="font-bold text-xl mb-2 text-white"><a href="https://github.com/alealencarr/TechChallenge-infra-foundational/">TechChallenge-infra-foundational</a></h4>
+                    <p class="text-gray-400 text-sm mb-4">Terraform para a infraestrutura base: Grupo de Recursos, VNet e Estado Remoto.</p>
+                    <span class="repo-tag text-xs font-mono py-1 px-2 rounded-full text-gray-300">Infraestrutura</span>
+                </div>
+                 <div class="card p-6 rounded-xl fade-in" style="transition-delay: 300ms;">
+                    <h4 class="font-bold text-xl mb-2 text-white"><a href="https://github.com/alealencarr/TechChallenge-infra-data/">TechChallenge-infra-data</a></h4>
+                    <p class="text-gray-400 text-sm mb-4">Terraform para os serviços de dados: Azure SQL e Blob Storage.</p>
+                    <span class="repo-tag text-xs font-mono py-1 px-2 rounded-full text-gray-300">Infraestrutura</span>
+                </div>
+                 <div class="card p-6 rounded-xl fade-in" style="transition-delay: 400ms;">
+                    <h4 class="font-bold text-xl mb-2 text-white"><a href="https://github.com/alealencarr/TechChallenge-infra-compute/">TechChallenge-infra-compute</a></h4>
+                    <p class="text-gray-400 text-sm mb-4">Terraform para as plataformas de computação: AKS, ACR e Function App.</p>
+                    <span class="repo-tag text-xs font-mono py-1 px-2 rounded-full text-gray-300">Infraestrutura</span>
+                </div>
+                <div class="card p-6 rounded-xl fade-in" style="transition-delay: 500ms;">
+                    <h4 class="font-bold text-xl mb-2 text-white"><a href="https://github.com/alealencarr/TechChallenge-infra-gateway/">TechChallenge-infra-gateway</a></h4>
+                    <p class="text-gray-400 text-sm mb-4">Terraform para o ponto de entrada da arquitetura: o Azure API Management.</p>
+                    <span class="repo-tag text-xs font-mono py-1 px-2 rounded-full text-gray-300">Infraestrutura</span>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="tecnologias" class="mb-24">
+            <h3 class="text-3xl font-bold text-center mb-12 section-title fade-in">Tecnologias utilizadas</h3>
+            <div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-8 fade-in">
+                <div class="flex items-center space-x-3 p-3 rounded-lg">
+                    <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.354a1.76 1.76 0 013.417-.592zM19 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.354a1.76 1.76 0 013.417-.592z"></path></svg>
+                    <span class="text-lg font-medium text-white">Azure</span>
+                </div>
+                 <div class="flex items-center space-x-3 p-3 rounded-lg">
+                    <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 16v-2m0-10v2m0 6v2M6 12H4m16 0h-2m-10 0h2m6 0h2M9 9l-2-2m10 0l-2 2M9 15l-2 2m10 0l-2-2"></path></svg>
+                    <span class="text-lg font-medium text-white">.NET 8 & 9</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 rounded-lg">
+                    <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.36V7.43a2 2 0 00-1-1.73l-6-3.46a2 2 0 00-2 0l-6 3.46a2 2 0 00-1 1.73v5.93a2 2 0 001 1.73l6 3.46a2 2 0 002 0l4-2.31M15 15.64v5.93M12 3.46v6.88L6 7.43v0M6 16.57l6 3.47 6-3.47M12 10.34L18 13.8v0"/></svg>
+                    <span class="text-lg font-medium text-white">Kubernetes</span>
+                </div>
+                 <div class="flex items-center space-x-3 p-3 rounded-lg">
+                    <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    <span class="text-lg font-medium text-white">Docker</span>
+                </div>
+                 <div class="flex items-center space-x-3 p-3 rounded-lg">
+                     <svg class="w-10 h-10 text-purple-500" viewBox="0 0 102 124" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M92.563 94.629H67.247V105.51H92.563V94.629Z" fill="currentColor"/><path d="M101.944 111.458L67.247 122.999V112.11L101.944 100.569V111.458Z" fill="currentColor"/><path d="M67.247 99.967L32.55 111.509V100.628L67.247 89.086V99.967Z" fill="currentColor"/><path d="M32.55 94.629H9.412V105.51H32.55V94.629Z" fill="currentColor"/><path d="M32.55 99.967V89.086L0 100.628V111.509L32.55 99.967Z" fill="currentColor"/><path d="M9.412 88.086H32.55V77.205H9.412V88.086Z" fill="currentColor"/><path d="M32.55 82.746L0 71.204V82.085L32.55 93.627V82.746Z" fill="currentColor"/><path d="M61.908 61.921H38.77V72.802H61.908V61.921Z" fill="currentColor"/><path d="M38.77 67.261L5.632 55.72V66.6L38.77 78.142V67.261Z" fill="currentColor"/><path d="M67.247 34.024L32.55 45.565V56.446L67.247 44.905V34.024Z" fill="currentColor"/><path d="M101.944 12.483L67.247 24.024V34.905L101.944 23.364V12.483Z" fill="currentColor"/><path d="M67.247 44.905V55.786L101.944 44.244V33.363L67.247 44.905Z" fill="currentColor"/><path d="M32.55 12.483V23.364L67.247 11.822V0.94L32.55 12.483Z" fill="currentColor"/></svg>
+                    <span class="text-lg font-medium text-white">Terraform</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 rounded-lg">
+                    <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.207 11.387.6.11.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.34.725-4.037-1.61-4.037-1.61-.546-1.387-1.332-1.756-1.332-1.756-1.09-.745.082-.73.082-.73 1.205.085 1.84 1.235 1.84 1.235 1.07 1.83 2.807 1.3 3.492.997.11-.775.418-1.3.76-1.6-2.665-.3-5.466-1.33-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.124-.3-.536-1.52.116-3.175 0 0 1.007-.32 3.3 1.23A11.51 11.51 0 0112 5.8c1.02.005 2.047.138 3.006.405 2.29-1.55 3.297-1.23 3.297-1.23.654 1.655.242 2.875.118 3.175.77.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.625-5.475 5.925.43.37.82 1.1.82 2.22 0 1.6-.015 2.89-.015 3.285 0 .315.22.69.825.57C20.565 21.795 24 17.295 24 12 24 5.37 18.63 0 12 0z"/></svg>
+                    <span class="text-lg font-medium text-white">GitHub Actions</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
     
-
-        <button id="toggle-menu" class="fixed top-4 left-4 z-30 bg-slate-800 text-white px-3 py-2 rounded-lg hover:bg-slate-700 transition">
-            ☰
-        </button>
-        
-        <!-- Menu lateral -->
-        <aside id="sidebar" class="fixed top-0 left-0 h-screen w-72 bg-white shadow-lg z-20 transition-all duration-300">
-            <div class="p-6 border-b border-slate-200">
-                <h1 class="text-2xl font-bold text-slate-800">🚀 Documentação</h1>
-                <p class="text-sm text-slate-500">Tech Challenge FIAP</p>
-            </div>
-            <nav id="main-nav" class="mt-6 flex flex-col space-y-2">
-                <a href="#" data-target="#execution-guide" class="main-nav-link active block px-6 py-3 text-slate-700 hover:bg-slate-100 hover:text-amber-500 font-semibold text-lg transition-colors duration-200">
-                    Guia de Execução
-                </a>
-                <a href="#" data-target="#api-guide" class="main-nav-link block px-6 py-3 text-slate-700 hover:bg-slate-100 hover:text-amber-500 font-semibold text-lg transition-colors duration-200">
-                    Documentação da API
-                </a>
-                <a href="#" data-target="#diagrams-guide" class="main-nav-link block px-6 py-3 text-slate-700 hover:bg-slate-100 hover:text-amber-500 font-semibold text-lg transition-colors duration-200">
-                    Diagramas de Infra
-                </a>
-            </nav>
-        </aside>
-
-        <!-- Main Content Area -->
-        <div id="content-area" class="w-full ml-72 p-6 md:p-10">
-
-            <!-- CONTENT PANE 1: EXECUTION GUIDE -->
-            <div id="execution-guide" class="content-pane">
-                <main>
-                    <section id="intro" class="text-center mb-16">
-                        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Guia de Setup e Execução</h1>
-                        <p class="max-w-3xl mx-auto text-lg text-slate-600">Projeto Tech Challenge FIAP com explicação e informação de como rodar no Kubernetes (Minikube). Um passo a passo completo para configurar e rodar a solução em um ambiente de desenvolvimento local.</p>
-                    </section>
-
-                    <section id="arquitetura" class="mb-16 scroll-mt-20">
-                        <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">1. Arquitetura da Solução Local</h2>
-                        <p class="text-slate-600 mb-8">Antes de começar, é importante entender a estrutura que eu montei. O sistema é composto por uma API (.NET), um Worker de background e um Banco de Dados (SQL Server), todos rodando como contêineres independentes dentro de um cluster Kubernetes.</p>
-                        
-                        <div class="bg-white p-6 rounded-lg shadow-lg">
-                            <h3 class="text-xl font-semibold text-slate-700 mb-4 text-center">Diagrama de Infraestrutura</h3>
-                            <div class="diagram-box bg-slate-100">Cluster Kubernetes (Minikube)</div>
-                            <div class="diagram-arrow"></div>
-                            <div class="grid md:grid-cols-3 gap-4 text-center">
-                                <div class="diagram-box">Pod(s) da API ↔️ HPA</div>
-                                <div class="diagram-box">Pod(s) do Worker</div>
-                                <div class="diagram-box">Pod do Banco de Dados</div>
-                            </div>
-                             <div class="diagram-arrow"></div>
-                            <div class="diagram-box bg-slate-100">Serviços (API Service, DB Service)</div>
-                             <div class="diagram-arrow"></div>
-                            <div class="grid md:grid-cols-2 gap-4 text-center">
-                                 <div class="diagram-box">Desenvolvedor ↔️ API Service</div>
-                                 <div class="diagram-box">Pods ↔️ DB Service ↔️ Armazenamento Persistente</div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="pre-requisitos" class="mb-16 scroll-mt-20">
-                        <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">2. Pré-requisitos (Preparando a Máquina)</h2>
-                        <p class="text-slate-600 mb-6">Garanta que as seguintes ferramentas estejam instaladas e funcionando antes de prosseguir.</p>
-                        <ul class="list-none space-y-4">
-                            <li class="flex items-start"><span class="text-amber-500 font-bold text-2xl mr-4">1</span><div class="flex-1"><strong class="text-slate-700">Git:</strong> Para clonar o repositório. <a href="https://github.com/alealencarr/TechChallenge.git" target="_blank" class="text-blue-600 hover:underline">Repositório</a>.</div></li>
-                            <li class="flex items-start"><span class="text-amber-500 font-bold text-2xl mr-4">2</span><div class="flex-1"><strong class="text-slate-700">.NET 9 SDK.</strong></div></li>
-                            <li class="flex items-start"><span class="text-amber-500 font-bold text-2xl mr-4">3</span><div class="flex-1"><strong class="text-slate-700">Docker Desktop.</strong> Ambiente de contêineres para Windows. <a href="https://www.docker.com/products/docker-desktop/" target="_blank" class="text-blue-600 hover:underline">Download</a>.</div></li>
-                            <li class="flex items-start"><span class="text-amber-500 font-bold text-2xl mr-4">4</span><div class="flex-1"><strong class="text-slate-700">Minikube:</strong> Cluster Kubernetes local. Instale via PowerShell (Admin): <code class="bg-slate-200 text-sm p-1 rounded">winget install Kubernetes.minikube</code>.</div></li>
-                            <li class="flex items-start"><span class="text-amber-500 font-bold text-2xl mr-4">5</span><div class="flex-1"><strong class="text-slate-700">kubectl:</strong> Ferramenta de linha de comando para K8s. Verifique com <code class="bg-slate-200 text-sm p-1 rounded">kubectl version --client</code>.</div></li>
-                        </ul>
-                    </section>
-                    
-                    <section id="execucao" class="mb-16 scroll-mt-20">
-                        <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">3. Passo a Passo da Execução</h2>
-                        <div class="space-y-8">
-                            <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 1: Clonar o Repositório</h3>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">git clone https://github.com/alealencarr/TechChallenge.git
-cd TechChallenge</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 2: Construir as Imagens Docker</h3>
-                                <p class="text-slate-600 mb-4">Construa as imagens para a API e o Worker.</p>
-                                <div class="code-block mb-4">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">docker build -t api-k8s:v1 -f api.dockerfile .</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">docker build -t worker-k8s:v1 -f job.dockerfile .</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 3: Iniciar e Preparar o Cluster Kubernetes</h3>
-                                 <div class="code-block mb-4">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">minikube start --memory 4g --cpus 2</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">minikube addons enable metrics-server</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 4: Carregar as Imagens para o Minikube</h3>
-                                <div class="code-block mb-4">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">minikube image load api-k8s:v1</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">minikube image load worker-k8s:v1</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 5: Deploy da Aplicação no Kubernetes</h3>
-                                <div class="code-block mb-4">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">kubectl apply -f k8s/</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-
-                            </div>
-                             <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 6: Verificar a Execução</h3>
-                                <p class="text-slate-600 mb-4">Monitore os Pods até que todos estejam com o status `Running`. Lembre-se que reinicializações (`CrashLoopBackOff`) são normais enquanto o banco de dados inicia.</p>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">kubectl get pods -w</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                             <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 7: Acessar e Testar a API</h3>
-                                <div class="code-block mb-4">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">minikube service api-service-tc</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                                 <p class="text-slate-600 mt-4">Este comando abrirá a URL da sua API no navegador. Adicione `/swagger` ao final para ver a documentação e testar.</p>
-                            </div>
-                            <div> 
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Passo 8: Com todos os pods "RUNNING" aponte para a porta 8080 para testar a collection.</h3>
-                                <div class="code-block mb-4">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">kubectl port-forward service/api-service-tc 8080:80</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="escalabilidade" class="mb-16 scroll-mt-20">
-                        <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">4. Entendendo a Escalabilidade Automática (HPA)</h2>
-                        <div class="bg-white p-6 rounded-lg shadow-lg space-y-4">
-                            <p class="text-slate-600">A escalabilidade é controlada pelo <strong>Horizontal Pod Autoscaler (HPA)</strong>. A regra é baseada no consumo de CPU para garantir que a aplicação tenha os recursos necessários sob alta carga.</p>
-                            <ul class="list-disc list-inside space-y-2 text-slate-600">
-                                <li><strong class="text-slate-700">Configuração:</strong> Cada pod da API solicita <code class="bg-slate-200 text-sm p-1 rounded">100m</code> (10% de um núcleo de CPU).</li>
-                                <li><strong class="text-slate-700">Regra:</strong> O HPA foi configurado para manter o uso médio de CPU em <code class="bg-slate-200 text-sm p-1 rounded">50%</code> do solicitado.</li>
-                                <li><strong class="text-slate-700">Limites:</strong> A aplicação escalará de um mínimo de <code class="bg-slate-200 text-sm p-1 rounded">1</code> pod até um máximo de <code class="bg-slate-200 text-sm p-1 rounded">9</code> pods.</li>
-                            </ul>
-                             <p class="text-slate-600">Quando a carga na API faz com que o uso médio de CPU ultrapasse o gatilho de 50%, o HPA começa a criar novos pods para distribuir o trabalho. Quando a carga diminui, o processo inverso ocorre.</p>
-                             <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash"># Monitore o HPA em tempo real com este comando
-kubectl get hpa -w</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                        </div>
-                    </section>
-
-                    <section id="limpeza" class="scroll-mt-20">
-                         <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">5. Como Limpar o Ambiente</h2>
-                         <p class="text-slate-600 mb-6">Quando terminar os testes, use os seguintes comandos para limpar os recursos e liberar memória do seu computador.</p>
-                         <div class="space-y-8">
-                             <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Deletar os recursos do Kubernetes</h3>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">kubectl delete -f k8s/</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">Parar o Minikube</h3>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">minikube stop</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                             <div>
-                                <h3 class="text-xl font-semibold text-slate-700 mb-2">(Opcional) Deletar o cluster completamente</h3>
-                                <div class="code-block">
-                                    <pre class="bg-slate-800 text-white p-4 rounded-lg overflow-x-auto"><code class="language-bash">minikube delete</code></pre>
-                                    <button class="copy-btn">Copiar</button>
-                                </div>
-                            </div>
-                         </div>
-                    </section>
-                </main>
-            </div>
-
-            <!-- CONTENT PANE 2: API DOCUMENTATION -->
-            <div id="api-guide" class="content-pane hidden">
-                <main class="w-full">
-                    <section id="visao-geral">
-                        <h2 class="text-4xl font-bold text-slate-800 mb-4">🧩 Visão Geral</h2>
-                        <p class="text-lg mb-6">Esta documentação detalha os recursos da API do Sistema de Pedidos. A API foi projetada para ser consumida de forma sequencial e intuitiva, com recursos para gerenciar todo o fluxo de um pedido de fast food, desde o cadastro de produtos até a finalização do pedido.</p>
-                        <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
-                             
-                            <h3 class="font-bold text-amber-800">
-                              Utilizando a Collection do Postman: 
-                              <a href="TechChallenge.postman_collection.json" download class="underline text-blue-600 hover:text-blue-800">
-                                Download da Collection
-                              </a>
-                            </h3>
-                            <p class="text-amber-700 mt-2">A coleção do Postman fornecida é a maneira recomendada de testar. Ela está organizada de forma sequencial para que as variáveis (como `{{idCliente}}`) sejam preenchidas automaticamente. Lembre-se de configurar a variável de ambiente `{{url}}` com a URL base da sua API.</p>
-                        </div>
-                    </section>
-
-                    <section id="recursos" class="mt-12">
-                        <h2 class="text-4xl font-bold text-slate-800 mb-8">📚 Recursos da API</h2>
-                        <p class="text-lg mb-6">A API é organizada em torno de recursos RESTful. Abaixo está uma descrição de cada recurso principal. Para a lista completa de endpoints, métodos HTTP, parâmetros e exemplos de `request`/`response`, consulte a <span class="font-semibold">documentação interativa do Swagger</span> ou a <span class="font-semibold">collection do Postman</span> fornecida.</p>
-                        <div class="space-y-10 mt-8">
-                            
-                            <article id="categorias">
-                                <h3 class="text-2xl font-semibold text-slate-700 mb-3">📁 Categorias</h3>
-                                <p>Representa os tipos de produto (ex: Lanche, Bebida). As categorias são pré-cadastradas no sistema e não podem ser manipuladas via API, servindo como base para a criação de produtos.</p>
-                            </article>
-
-                            <article id="clientes">
-                                <h3 class="text-2xl font-semibold text-slate-700 mb-3">👤 Clientes</h3>
-                                <p>Gerencia os dados do cliente final. A identificação do cliente é opcional na criação de um pedido.</p>
-                            </article>
-
-                            <article id="ingredientes">
-                                <h3 class="text-2xl font-semibold text-slate-700 mb-3">🧂 Ingredientes</h3>
-                                <p>Representa os ingredientes disponíveis para montagem de lanches. Possui dados pré-carregados, mas também podem ser gerenciados via API.</p>
-                            </article>
-
-                            <article id="produtos">
-                                <h3 class="text-2xl font-semibold text-slate-700 mb-3">🍔 Produtos</h3>
-                                <p>Produtos que podem ser solicitados no pedido. A lógica de ingredientes é estritamente ligada à categoria do produto.</p>
-                            </article>
-
-                            <article id="pedidos">
-                                <h3 class="text-2xl font-semibold text-slate-700 mb-3">🧾 Pedidos</h3>
-                                <p>Representa um pedido feito com base nos produtos disponíveis, com regras específicas para cálculo de preço com base em ingredientes adicionais.</p>
-                            </article>
-
-                        </div>
-                    </section>
-                    
-                    <section id="regras-negocio" class="mt-12">
-                        <h2 class="text-4xl font-bold text-slate-800 mb-8">⚖️ Regras de Negócio Chave</h2>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="bg-white p-6 rounded-lg shadow">
-                                <h4 class="font-bold text-lg text-slate-800 mb-2">Produtos e Categorias</h4>
-                                <ul class="list-disc list-inside space-y-2">
-                                    <li>Se a categoria for <span class="font-semibold bg-yellow-100 px-1 rounded">'Lanche'</span>, ingredientes podem ser incluídos.</li>
-                                    <li>Lanches devem ter <span class="font-semibold">pelo menos um</span> ingrediente.</li>
-                                    <li>Para outras categorias (Bebida, Acompanhamento), ingredientes enviados na requisição serão <span class="font-semibold text-red-600">ignorados</span>.</li>
-                                </ul>
-                            </div>
-                            <div class="bg-white p-6 rounded-lg shadow">
-                                <h4 class="font-bold text-lg text-slate-800 mb-2">Pedidos e Ingredientes</h4>
-                                <ul class="list-disc list-inside space-y-2">
-                                    <li>Ingredientes já cadastrados no produto servem como base.</li>
-                                    <li>Ingredientes <span class="font-semibold text-green-600">adicionais</span> no pedido terão seu preço somado ao valor total.</li>
-                                    <li>Ingredientes <span class="font-semibold text-red-600">removidos</span> do lanche <span class="font-semibold">não geram desconto</span> no valor final.</li>
-                                     <li>Um pedido deve conter pelo menos um produto.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="validacoes" class="mt-12">
-                        <h2 class="text-4xl font-bold text-slate-800 mb-8">🧪 Validações e Casos de Erro</h2>
-                        <p class="mb-4">A coleção do Postman inclui exemplos para todos os cenários, tanto de sucesso (status 2xx) quanto de falha (status 4xx). Os erros de validação são retornados com mensagens claras indicando o problema.</p>
-                         <ul class="list-disc list-inside space-y-2 bg-white p-6 rounded-lg shadow">
-                            <li><span class="font-semibold">Sucesso:</span> Retornos com status `200 OK`, `201 Created`, ou `204 No Content`.</li>
-                            <li><span class="font-semibold text-red-600">Erros Comuns:</span></li>
-                            <li class="ml-6">Criar um lanche sem ingredientes.</li>
-                            <li class="ml-6">Tentar associar ingredientes a um produto que não é um lanche.</li>
-                            <li class="ml-6">Criar um pedido sem nenhum produto.</li>
-                            <li class="ml-6">Informar IDs de ingredientes ou categorias inválidos.</li>
-                        </ul>
-                    </section>
-
-                    <section id="ordem-execucao" class="mt-12">
-                        <h2 class="text-4xl font-bold text-slate-800 mb-8">🧭 Ordem de Execução e Dependências</h2>
-                        <p class="mb-4">Para garantir o funcionamento correto ao testar a criação de entidades, siga a ordem de dependência abaixo. A coleção do Postman já está organizada desta forma.</p>
-                        <div class="overflow-x-auto bg-white rounded-lg shadow">
-                            <table class="w-full text-left">
-                                <thead class="bg-slate-100">
-                                    <tr>
-                                        <th class="p-4 font-semibold text-slate-600">Ordem</th>
-                                        <th class="p-4 font-semibold text-slate-600">Entidade</th>
-                                        <th class="p-4 font-semibold text-slate-600">Dependência</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y">
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-4 font-mono">1</td>
-                                        <td class="p-4 font-semibold text-slate-800">Categorias</td>
-                                        <td class="p-4">Nenhuma (Dados pré-cadastrados)</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-4 font-mono">2</td>
-                                        <td class="p-4 font-semibold text-slate-800">Clientes</td>
-                                        <td class="p-4">Nenhuma</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-4 font-mono">3</td>
-                                        <td class="p-4 font-semibold text-slate-800">Ingredientes</td>
-                                        <td class="p-4">Nenhuma</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-4 font-mono">4</td>
-                                        <td class="p-4 font-semibold text-slate-800">Produtos</td>
-                                        <td class="p-4">Categoria e Ingredientes (se for lanche)</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-4 font-mono">5</td>
-                                        <td class="p-4 font-semibold text-slate-800">Pedidos</td>
-                                        <td class="p-4">Produtos (obrigatório), Cliente (opcional)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-                    
-                    <section id="exemplos" class="mt-12">
-                         <h2 class="text-4xl font-bold text-slate-800 mb-8">🛠️ Exemplos Práticos de Casos de Negócio</h2>
-                         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                               <div class="bg-white p-6 rounded-lg shadow border-t-4 border-green-400">
-                                <h4 class="font-bold text-lg text-slate-800 mb-2">Cenário Válido</h4>
-                                <p>Criar um produto do tipo 'Lanche' com 3 ingredientes cadastrados.</p>
-                                <p class="mt-2 text-sm font-semibold text-green-600">Resultado: Sucesso ✅</p>
-                               </div>
-                                <div class="bg-white p-6 rounded-lg shadow border-t-4 border-yellow-400">
-                                <h4 class="font-bold text-lg text-slate-800 mb-2">Cenário Ignorado</h4>
-                                <p>Criar um produto do tipo 'Bebida' e enviar uma lista de ingredientes no corpo da requisição.</p>
-                                <p class="mt-2 text-sm font-semibold text-yellow-600">Resultado: Sucesso, mas os ingredientes são ignorados 🤷</p>
-                               </div>
-                                <div class="bg-white p-6 rounded-lg shadow border-t-4 border-red-400">
-                                <h4 class="font-bold text-lg text-slate-800 mb-2">Cenário Inválido</h4>
-                                <p>Criar um produto do tipo 'Lanche' sem enviar nenhum ingrediente.</p>
-                                <p class="mt-2 text-sm font-semibold text-red-600">Resultado: Erro de Validação ❌</p>
-                               </div>
-                                <div class="bg-white p-6 rounded-lg shadow border-t-4 border-green-400">
-                                <h4 class="font-bold text-lg text-slate-800 mb-2">Pedido com Adicionais</h4>
-                                <p>Criar um pedido com um lanche e informar ingredientes que não estão na sua composição original.</p>
-                                <p class="mt-2 text-sm font-semibold text-green-600">Resultado: Sucesso, e o valor dos ingredientes extras é somado ao total ✅</p>
-                               </div>
-                                <div class="bg-white p-6 rounded-lg shadow border-t-4 border-yellow-400">
-                                <h4 class="font-bold text-lg text-slate-800 mb-2">Pedido com Remoção</h4>
-                                <p>Criar um pedido com um lanche e remover um de seus ingredientes base.</p>
-                                <p class="mt-2 text-sm font-semibold text-yellow-600">Resultado: Sucesso, mas o valor do pedido não muda (sem desconto) 🤷</p>
-                               </div>
-                         </div>
-                    </section>
-                </main>
-            </div>
-  <!-- CONTENT PANE 3: DIAGRAMS -->
-            <div id="diagrams-guide" class="content-pane hidden">
-                <main>
-                    <section id="diagrams-intro" class="text-center mb-16"> 
-                        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4 ">Diagramas de Infraestrutura</h1>
-                        <p class="max-w-3xl mx-auto text-lg text-slate-600">Aqui estão os diagramas de arquitetura e infraestrutura do projeto. As imagens são carregadas diretamente do repositório.</p>
-                    </section>
-
-                    <section id="diagrama-infra" class="mt-12">
-                        <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">1. Diagrama de Infraestrutura</h2>
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex justify-center">
-                            
-                            <img src="./infraestrutura.png" alt="🧱 Diagrama de Infraestrutura" class="diagram-image max-w-4xl w-full h-auto rounded-md border border-slate-200 cursor-pointer hover:opacity-80 transition-opacity" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/e2e8f0/475569?text=Diagrama+Nao+Encontrado';">
-                        </div>
-                    </section>
-
-                    <section id="diagrama-negocio" class="mt-12">
-                        <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">2. Diagrama de Negócio</h2>
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex justify-center">
-                             
-                            <img src="negocio.png" alt="🧠 Diagrama de Negócio" class="diagram-image max-w-4xl w-full h-auto rounded-md border border-slate-200 cursor-pointer hover:opacity-80 transition-opacity" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/e2e8f0/475569?text=Diagrama+Nao+Encontrado';">
-                        </div>
-                    </section>
-
-                     <section id="diagrama-problema" class="mt-12">
-                        <h2 class="text-3xl font-bold text-slate-800 border-b-2 border-amber-400 pb-2 mb-8">3. Diagrama de Resolução de Problema</h2>
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex justify-center">
-                             
-                            <img src="resolucao.png" alt="🛠️ Resolução de Problema" class="diagram-image max-w-4xl w-full h-auto rounded-md border border-slate-200 cursor-pointer hover:opacity-80 transition-opacity" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/e2e8f0/475569?text=Diagrama+Nao+Encontrado';">
-                        </div>
-                    </section>
-                </main>
-            </div>
-           
+    <footer class="border-t border-gray-800">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
+            <p>&copy; 2025 - Desenvolvido por <a href="https://github.com/alealencarr" target="_blank" class="text-blue-400 hover:underline">alealencarr</a></p>
         </div>
-    </div>
+    </footer>
 
-       <!-- Modal for Image Preview -->
-    <div id="image-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4 transition-opacity duration-300">
-        <span id="close-modal" class="absolute top-4 right-6 text-white text-5xl font-bold cursor-pointer hover:text-slate-300">&times;</span>
-        <img id="modal-image" src="" alt="Diagrama em tamanho grande" class="max-w-[95vw] max-h-[95vh] object-contain">
-    </div>    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const mainNavLinks = document.querySelectorAll('.main-nav-link');
-            const contentPanes = document.querySelectorAll('.content-pane');
-
-            // --- Main Navigation Logic ---
-            mainNavLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-
-                    // Hide all content panes
-                    contentPanes.forEach(pane => pane.classList.add('hidden'));
-
-                    // Show the target pane
-                    const targetId = link.getAttribute('data-target');
-                    document.querySelector(targetId).classList.remove('hidden');
-
-                    // Update active class for main navigation
-                    mainNavLinks.forEach(nav => nav.classList.remove('active'));
-                    link.classList.add('active');
-                });
-            });
-
-            // --- Universal Copy-to-Clipboard Logic ---
-            document.body.addEventListener('click', (e) => {
-                if (e.target && e.target.classList.contains('copy-btn')) {
-                    const button = e.target;
-                    const codeBlock = button.previousElementSibling;
-                    if (codeBlock) {
-                        const textToCopy = codeBlock.innerText;
-                        
-                        navigator.clipboard.writeText(textToCopy).then(() => {
-                            button.innerText = 'Copiado!';
-                            button.style.backgroundColor = '#10b981'; // green-500
-                            setTimeout(() => {
-                                button.innerText = 'Copiar';
-                                button.style.backgroundColor = '#475569'; // slate-600
-                            }, 2000);
-                        }).catch(err => {
-                            console.error('Falha ao copiar texto: ', err);
-                            // Fallback for older browsers or iframes
-                            try {
-                                const textArea = document.createElement('textarea');
-                                textArea.value = textToCopy;
-                                document.body.appendChild(textArea);
-                                textArea.select();
-                                document.execCommand('copy');
-                                document.body.removeChild(textArea);
-                                button.innerText = 'Copiado!';
-                                button.style.backgroundColor = '#10b981';
-                                setTimeout(() => {
-                                    button.innerText = 'Copiar';
-                                    button.style.backgroundColor = '#475569';
-                                }, 2000);
-                            } catch (fallbackErr) {
-                                console.error('Fallback de cópia também falhou: ', fallbackErr);
-                            }
-                        });
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
                     }
-                }
-            });
-
-            // --- API Docs Internal Navigation & Intersection Observer ---
-            // This script is specific to the API guide's structure
-            const apiSections = document.querySelectorAll('#api-guide section[id]');
-            const apiNavLinks = document.querySelectorAll('#api-guide .api-nav-link'); // Note: This class is not in the original HTML, so this part won't work without it. Let's assume the user wants this feature and add the class.
-
-            if (apiSections.length > 0 && apiNavLinks.length > 0) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            apiNavLinks.forEach(link => {
-                                link.classList.remove('active');
-                                if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                    link.classList.add('active');
-                                }
-                            });
-                        }
-                    });
-                }, { rootMargin: "-40% 0px -60% 0px" });
-
-                apiSections.forEach(section => {
-                    observer.observe(section);
                 });
-            }
-
-            // --- Image Modal Logic ---
-            const modal = document.getElementById('image-modal');
-            const modalImg = document.getElementById('modal-image');
-            const closeModalBtn = document.getElementById('close-modal');
-            const diagramImages = document.querySelectorAll('.diagram-image');
-
-            diagramImages.forEach(img => {
-                img.addEventListener('click', () => {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    modalImg.src = img.src;
-                    document.body.classList.add('modal-open');
-                });
+            }, {
+                threshold: 0.1
             });
 
-            const closeModal = () => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                document.body.classList.remove('modal-open');
-            };
-
-            closeModalBtn.addEventListener('click', closeModal);
-            
-            // Close modal if user clicks on the background overlay
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            // Close modal with Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === "Escape" && !modal.classList.contains('hidden')) {
-                    closeModal();
-                }
-            });
-
-             const toggleButton = document.getElementById('toggle-menu');
-            const sidebar = document.getElementById('sidebar');
-        
-            toggleButton.addEventListener('click', () => {
-                // alterna entre largura 0 e largura padrão (w-72)
-                sidebar.classList.toggle('w-72');
-                sidebar.classList.toggle('w-0');
-                sidebar.classList.toggle('overflow-hidden');
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
             });
         });
     </script>
