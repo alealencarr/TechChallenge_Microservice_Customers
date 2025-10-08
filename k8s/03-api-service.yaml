@@ -2,14 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: api-service-tc
-  # Cria um IP privado dentro da subnet do AKS, acessível apenas pela VNet.
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
-  type: LoadBalancer 
+  #  ClusterIP torna o serviço acessível apenas DENTRO do cluster.
+  type: ClusterIP
   selector:
     app: api-tc
   ports:
   - protocol: TCP
-    port: 80           
-    targetPort: 8080  
+    port: 80
+    targetPort: 8080
