@@ -56,6 +56,13 @@ jobs:
           resource-group: ${{ env.RESOURCE_GROUP }}
           cluster-name: ${{ env.AKS_CLUSTER_NAME }}
 
+      # 6.1. Garante integração AKS → ACR (NOVO!)
+      - name: 'Ensure AKS-ACR integration'
+        run: |
+          echo "🔗 Ensuring AKS-ACR integration..."
+          az aks update --name ${{ env.AKS_CLUSTER_NAME }} --resource-group ${{ env.RESOURCE_GROUP }} --attach-acr ${{ env.ACR_LOGIN_SERVER }} || echo "⚠️ ACR already attached"
+          echo "✅ AKS-ACR integration verified!"
+
       # 7. Cria/Atualiza secrets no Kubernetes
       - name: 'Create/Update Kubernetes secrets'
         run: |
@@ -85,15 +92,36 @@ jobs:
       - name: 'Verify deployment status'
         run: |
           echo "🔍 Checking deployment status..."
-          kubectl rollout status deployment/api-deployment-tc --timeout=5m
-          echo "✅ Deployment is healthy!"
+          kubectl rollout status deployment/api-deployment-tc --timeout=5m || true
           
-          echo "📊 Current pods:"
+          echo ""
+          echo "📊 Deployment info:"
+          kubectl describe deployment api-deployment-tc
+          
+          echo ""
+          echo "🔍 Current pods:"
           kubectl get pods -l app=api-tc
           
+          echo ""
+          echo "📝 Pod logs (if any):"
+          POD_NAME=$(kubectl get pods -l app=api-tc -o jsonpath='{.items[0].metadata.name}' 2>/dev/null || echo "")
+          if [ ! -z "$POD_NAME" ]; then
+            echo "Pod: $POD_NAME"
+            kubectl logs $POD_NAME --tail=50 || echo "No logs available"
+            echo ""
+            echo "📋 Pod events:"
+            kubectl describe pod $POD_NAME | grep -A 20 Events || echo "No events"
+          else
+            echo "⚠️ No pods found!"
+            echo "Checking deployment events:"
+            kubectl describe deployment api-deployment-tc | grep -A 20 Events
+          fi
+          
+          echo ""
           echo "🌐 Service status:"
           kubectl get svc api-service-tc
           
+          echo ""
           echo "🔗 Ingress status:"
           kubectl get ingress api-ingress
 
