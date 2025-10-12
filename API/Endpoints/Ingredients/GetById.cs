@@ -24,6 +24,6 @@ internal sealed class GetById : IEndpoint
            })
            .WithTags("Ingredients")
            .Produces<ICommandResult<IngredientOutputDto?>>()
-           .WithName("Ingredient.GetById");//.RequireAuthorization();
+           .WithName("Ingredient.GetById").RequireAuthorization();//.RequireAuthorization();
     }
 }

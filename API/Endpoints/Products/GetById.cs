@@ -24,7 +24,7 @@ internal sealed class GetById : IEndpoint
            })
            .WithTags("Products")
            .Produces<ICommandResult<ProductOutputDto?>>()
-           .WithName("Product.GetById");//.RequireAuthorization();
+           .WithName("Product.GetById").RequireAuthorization();//.RequireAuthorization();
 
     }
 }

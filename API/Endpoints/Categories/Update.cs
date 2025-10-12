@@ -26,7 +26,7 @@ namespace API.Endpoints.Categories
                })
                .WithTags("Categories")
                .Produces<ICommandResult<CategorieOutputDto?>>()
-               .WithName("Categorie.Update"); //.RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Master" }); //Comentado porque para a fase 3 não terá essa feature
+               .WithName("Categorie.Update").RequireAuthorization(); //.RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Master" }); //Comentado porque para a fase 3 não terá essa feature
 
         }
     }

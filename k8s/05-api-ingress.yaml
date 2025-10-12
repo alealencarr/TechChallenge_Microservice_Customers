@@ -8,6 +8,7 @@ metadata:
     # Health probe na raiz 
     appgw.ingress.kubernetes.io/health-probe-path: "/"
 spec:
+  ingressClassName: azure-application-gateway 
   rules:
   - host: api.internal.techchallenge
     http:

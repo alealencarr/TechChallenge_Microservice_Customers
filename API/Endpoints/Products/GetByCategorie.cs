@@ -24,7 +24,7 @@ internal sealed class GetByCategorie : IEndpoint
            })
            .WithTags("Products")
            .Produces<ICommandResult<List<ProductOutputDto>>>()
-           .WithName("Product.GetByCategorie");//.RequireAuthorization();
+           .WithName("Product.GetByCategorie").RequireAuthorization();//.RequireAuthorization();
 
     }
 }

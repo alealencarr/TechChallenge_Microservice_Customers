@@ -56,7 +56,7 @@ jobs:
           resource-group: ${{ env.RESOURCE_GROUP }}
           cluster-name: ${{ env.AKS_CLUSTER_NAME }}
 
-      # 6.1. Garante integração AKS → ACR (NOVO!)
+      # 6.1. Garante integração AKS → ACR  
       - name: 'Ensure AKS-ACR integration'
         run: |
           echo "🔗 Ensuring AKS-ACR integration..."
@@ -124,6 +124,64 @@ jobs:
           echo ""
           echo "🔗 Ingress status:"
           kubectl get ingress api-ingress
+
+      # 11. Reinicia AGIC para reprocessar Ingress  
+      - name: 'Restart AGIC to process Ingress'
+        run: |
+          echo "🔄 Restarting AGIC to ensure Ingress is processed..."
+          
+          # Deleta pod do AGIC
+          kubectl delete pod -n kube-system -l app=ingress-appgw
+          
+          echo "⏳ Waiting for AGIC to restart (30 seconds)..."
+          sleep 30
+          
+          # Aguarda novo pod ficar Ready
+          kubectl wait --for=condition=ready pod -n kube-system -l app=ingress-appgw --timeout=120s || true
+          
+          echo "⏳ Waiting for AGIC to reconfigure Application Gateway (90 seconds)..."
+          sleep 90
+          
+          echo "✅ AGIC restarted and processing complete!"
+
+      # 12. Verifica se Ingress tem IP  
+      - name: 'Verify Ingress has IP address'
+        run: |
+          echo "🔍 Verifying Ingress configuration..."
+          
+          kubectl get ingress api-ingress
+          
+          INGRESS_IP=$(kubectl get ingress api-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "")
+          
+          if [ -z "$INGRESS_IP" ]; then
+            echo "⚠️ WARNING: Ingress still has no IP address!"
+            echo "This may need manual intervention."
+            exit 1
+          else
+            echo "✅ Ingress has IP: $INGRESS_IP"
+          fi
+
+      # 13. Verifica health do Application Gateway  
+      - name: 'Verify Application Gateway backend health'
+        run: |
+          echo "🔍 Checking Application Gateway backend health..."
+          
+          BACKEND_HEALTH=$(az network application-gateway show-backend-health \
+            --name agw-ingress-tchungry \
+            --resource-group MC_${{ env.RESOURCE_GROUP }}_${{ env.AKS_CLUSTER_NAME }}_brazilsouth \
+            --query "backendAddressPools[0].backendHttpSettingsCollection[0].servers[0].health" -o tsv 2>/dev/null || echo "Unknown")
+          
+          echo "Backend health: $BACKEND_HEALTH"
+          
+          if [ "$BACKEND_HEALTH" == "Healthy" ]; then
+            echo "✅ Backend is healthy! Deployment successful!"
+          else
+            echo "⚠️ Backend health: $BACKEND_HEALTH"
+            echo "Full health report:"
+            az network application-gateway show-backend-health \
+              --name agw-ingress-tchungry \
+              --resource-group MC_${{ env.RESOURCE_GROUP }}_${{ env.AKS_CLUSTER_NAME }}_brazilsouth
+          fi
 
       # 11. Logout do Azure
       - name: 'Azure Logout'

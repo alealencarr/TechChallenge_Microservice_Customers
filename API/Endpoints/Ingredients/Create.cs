@@ -30,6 +30,6 @@ internal sealed class Create : IEndpoint
            })
            .WithTags("Ingredients")
            .Produces<ICommandResult<IngredientOutputDto?>>()
-           .WithName("Ingredient.Create"); //.RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Master" }); //Comentado porque para a fase 3 não terá essa feature
+           .WithName("Ingredient.Create").RequireAuthorization(); //.RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Master" }); //Comentado porque para a fase 3 não terá essa feature
     }
 }

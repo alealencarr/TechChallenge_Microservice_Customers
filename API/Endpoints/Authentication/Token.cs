@@ -32,4 +32,5 @@
 //           .WithName("Authentication.Token");
 //    }
 //}
-//Comentado porque a auth está na Function do Azure agora
+
+////Comentado porque a auth está na Function do Azure agora

@@ -25,7 +25,7 @@ internal sealed class GetAll : IEndpoint
            })
            .WithTags("Ingredients")
            .Produces<ICommandResult<List<IngredientOutputDto>>>()
-           .WithName("Ingredient.GetAll");//.RequireAuthorization();
+           .WithName("Ingredient.GetAll").RequireAuthorization();//.RequireAuthorization();
     }
 }
 

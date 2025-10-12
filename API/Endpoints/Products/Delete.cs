@@ -29,7 +29,7 @@ internal sealed class Delete : IEndpoint
            })
            .WithTags("Products")
            .Produces<ICommandResult>()
-           .WithName("Product.Delete"); //.RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Master" }); //Comentado porque para a fase 3 não terá essa feature
+           .WithName("Product.Delete").RequireAuthorization(); //.RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Master" }); //Comentado porque para a fase 3 não terá essa feature
 
     }
 }

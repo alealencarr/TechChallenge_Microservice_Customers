@@ -24,7 +24,7 @@ namespace API.Endpoints.Categories
                })
                .WithTags("Categories")
                .Produces<ICommandResult>()
-               .WithName("Categorie.Delete")
+               .WithName("Categorie.Delete").RequireAuthorization()
                ; //.RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Master" }); //Comentado porque para a fase 3 não terá essa feature
         }
     }
