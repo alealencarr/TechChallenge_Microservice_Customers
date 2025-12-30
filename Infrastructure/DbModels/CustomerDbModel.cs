@@ -30,7 +30,7 @@
 
         public bool CustomerIdentified { get; private set; }
 
-        public ICollection<OrderDbModel> Orders { get; set; } = new List<OrderDbModel>();
+        //public ICollection<OrderDbModel> Orders { get; set; } = new List<OrderDbModel>();
 
     }
 }

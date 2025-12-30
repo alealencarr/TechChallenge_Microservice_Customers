@@ -32,10 +32,10 @@ namespace Infrastructure.ModelsConfiguration
             builder.Property(c => c.CreatedAt)
                    .IsRequired();
 
-            builder.HasMany(c => c.Orders)
-                   .WithOne(o => o.Customer)  
-                   .HasForeignKey(o => o.CustomerId)  
-                   .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasMany(c => c.Orders)
+            //       .WithOne(o => o.Customer)  
+            //       .HasForeignKey(o => o.CustomerId)  
+            //       .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

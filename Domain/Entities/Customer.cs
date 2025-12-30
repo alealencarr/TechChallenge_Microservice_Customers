@@ -1,11 +1,10 @@
-﻿using Domain.Entities.Aggregates.AggregateOrder;
-using Domain.ValueObjects;
+﻿using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
     public class Customer
     {
-        public Customer(Guid id, DateTime createdAt, string cpf, string name,  string mail, bool customerIdentified)
+        public Customer(Guid id, DateTime createdAt, string cpf, string name, string mail, bool customerIdentified)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -18,7 +17,7 @@ namespace Domain.Entities
         {
             if (string.IsNullOrEmpty(cpf))
                 throw new ArgumentNullException("É necessário informar um Cpf para criar o cliente");
-            if (string.IsNullOrEmpty(name)) 
+            if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException("É necessário informar um Nome para criar o cliente");
             if (string.IsNullOrEmpty(mail))
                 throw new ArgumentNullException("É necessário informar um E-mail para criar o cliente");
@@ -43,7 +42,7 @@ namespace Domain.Entities
         public CpfVo? Cpf { get; set; }
         public string Name { get; set; } = string.Empty;
 
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        //public ICollection<Order> Orders { get; set; } = new List<Order>();
 
         public string Mail { get; set; } = string.Empty;
 
@@ -51,4 +50,3 @@ namespace Domain.Entities
 
     }
 }
- 

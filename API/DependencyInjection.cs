@@ -3,8 +3,6 @@ using API.Extensions;
 using API.Extensions.HealthCheck;
 using API.Extensions.Middlewares;
 using Application.Common;
-using Application.Interfaces.Services;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -82,8 +80,7 @@ public static class DependencyInjection
             x.AddSecurityRequirement(securityRequirement);
         });
 
-        services.AddScoped<IPasswordService, PasswordService>();
-        services.AddScoped<ITokenService, TokenService>();
+ 
         services.AddTransient<ApiHealthCheck>();
 
         return services;
