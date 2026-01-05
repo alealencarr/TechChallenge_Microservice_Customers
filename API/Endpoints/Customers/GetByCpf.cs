@@ -24,7 +24,7 @@ namespace API.Endpoints.Customers
                })
                .WithTags("Customers")
                .Produces<ICommandResult<CustomerOutputDto?>>()
-               .WithName("Customer.GetByCpf");//.RequireAuthorization();
+               .WithName("Customer.GetByCpf").RequireAuthorization();
             //;//.RequireAuthorization();
         }
     }

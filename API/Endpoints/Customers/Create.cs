@@ -32,7 +32,7 @@ namespace API.Endpoints.Customers
                .WithTags("Customers")
                .Produces<ICommandResult<CustomerOutputDto?>>()
                .WithName("Customer.Create")
-               ;//.RequireAuthorization();
+               .RequireAuthorization();
         }
     }
 }
