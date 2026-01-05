@@ -7,7 +7,7 @@ Log.Logger = LogExtensions.ConfigureLog();
 
 try
 {
-    Log.Information("Iniciando aplica��o...");
+    Log.Information("Iniciando aplicação...");
 
     var builder = WebApplication.CreateBuilder(args);
 

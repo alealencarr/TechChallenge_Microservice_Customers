@@ -1,5 +1,6 @@
 ﻿using HealthChecks.UI.Client;
 using Infrastructure.DbContexts;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +19,7 @@ namespace Infrastructure
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             var cnnStr = configuration.GetConnectionString(Configuration.ConnectionString) ?? configuration.GetConnectionString("Default");
-            //services.AddTransient<DataSeeder>();
+            services.AddTransient<DataSeeder>();
 
             services.AddDbContext<AppDbContext>(x =>
             {
@@ -47,7 +48,7 @@ namespace Infrastructure
 
         public static void AddHealthChecks(this WebApplication app)
         {
-            app.UseHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
+            app.UseHealthChecks("/customers/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
             {
                 Predicate = _ => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
