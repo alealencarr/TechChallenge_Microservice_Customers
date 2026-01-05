@@ -41,9 +41,6 @@ namespace Domain.Entities
         public Guid Id { get; set; }
         public CpfVo? Cpf { get; set; }
         public string Name { get; set; } = string.Empty;
-
-        //public ICollection<Order> Orders { get; set; } = new List<Order>();
-
         public string Mail { get; set; } = string.Empty;
 
         public bool CustomerIdentified { get; private set; }

@@ -23,7 +23,7 @@ try
 
     app.RegisterPipeline();
     app.AddHealthChecks();
-    app.MapGet("/", () => Results.Ok("TechChallenge API - Running"));
+    //app.MapGet("/", () => Results.Ok("TechChallenge API [Customers] - Running"));
     app.Run();
 }
 catch (Exception ex)

@@ -30,15 +30,7 @@
 
         public bool CustomerIdentified { get; private set; }
 
-        //public ICollection<OrderDbModel> Orders { get; set; } = new List<OrderDbModel>();
-
     }
 }
 
-//modelBuilder.Entity<Cliente>().OwnsOne(c => c.Cpf, cpf =>
-//{
-//    cpf.Property(c => c.Valor)
-//       .HasColumnName("Cpf")
-//       .IsRequired()
-//       .HasMaxLength(11);
-//});
+ 
