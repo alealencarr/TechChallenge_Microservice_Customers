@@ -81,5 +81,22 @@ namespace Application.Controllers.Customers
             }
         }
 
+        public async Task<ICommandResult<CustomerOutputDto?>> GetCustomerById(Guid id)
+        {
+            CustomerPresenter customerPresenter = new("Cliente encontrado!");
+
+            try
+            {
+                var customerGateway = CustomerGateway.Create(_dataSource);
+                var useCase = GetCustomerByIdUseCase.Create(customerGateway);
+                var customer = await useCase.Run(id);
+
+                return customer is null ? customerPresenter.Error<CustomerOutputDto?>("Customer not found.") : customerPresenter.TransformObject(customer);
+            }
+            catch (Exception ex)
+            {
+                return customerPresenter.Error<CustomerOutputDto?>(ex.Message);
+            }
+        }
     }
 }

@@ -19,8 +19,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration configuration)
     {
-        Utils.Configure(configuration["ApiUrls:Base"]);
-
+ 
         services.AddAuthentication(configuration);
         services.AddAuthorization();
         services.AddSerilog();
