@@ -9,9 +9,11 @@ using MiniValidation;
 using Shared.DTO.Categorie.Output;
 using Shared.DTO.Customer.Request;
 using Shared.Result;
+using System.Diagnostics.CodeAnalysis;
 
 namespace API.Endpoints.Customers
 {
+    [ExcludeFromCodeCoverage]
     internal sealed class Create : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)

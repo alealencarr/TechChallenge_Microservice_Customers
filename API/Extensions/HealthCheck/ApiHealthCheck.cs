@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace API.Extensions.HealthCheck;
+[ExcludeFromCodeCoverage]
+
 public class ApiHealthCheck : IHealthCheck
 {
     public Task<HealthCheckResult> CheckHealthAsync(

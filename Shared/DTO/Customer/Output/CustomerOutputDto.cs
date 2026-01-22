@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Shared.DTO.Categorie.Output
 {
+    [ExcludeFromCodeCoverage]
+
     public record CustomerOutputDto
     {
         public Guid Id { get; set; }

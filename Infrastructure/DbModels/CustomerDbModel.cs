@@ -1,5 +1,9 @@
-﻿namespace Infrastructure.DbModels
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Infrastructure.DbModels
 {
+    [ExcludeFromCodeCoverage]
+
     public class CustomerDbModel
     {
         protected CustomerDbModel()

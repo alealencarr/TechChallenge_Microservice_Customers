@@ -5,9 +5,12 @@ using Infrastructure.DbContexts;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO.Categorie.Output;
 using Shared.Result;
+using System.Diagnostics.CodeAnalysis;
 
 namespace API.Endpoints.Customers
 {
+    [ExcludeFromCodeCoverage]
+
     internal sealed class GetById : IEndpoint
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
