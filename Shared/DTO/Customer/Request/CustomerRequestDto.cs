@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Shared.DTO.Customer.Request
 {
+    [ExcludeFromCodeCoverage]
+
     public record CustomerRequestDto
     {
         [Required(ErrorMessage = "Favor informar o Cpf.")]
