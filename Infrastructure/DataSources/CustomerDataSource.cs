@@ -4,9 +4,12 @@ using Infrastructure.DbModels;
 using Microsoft.EntityFrameworkCore;
 using Shared.DTO.Categorie.Input;
 using Shared.DTO.Customer.Request;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure.DataSources
 {
+    [ExcludeFromCodeCoverage]
+
     public class CustomerDataSource : ICustomerDataSource
     {
         private readonly AppDbContext _appDbContext;
